@@ -6,12 +6,12 @@ import (
 	"os"
 	"time"
 
+	"github.com/chriskuchin/<app>/internal/controller"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/log"
-	"github.com/urfave/cli"
-	"github.com/urfave/cli/v2"
+	cli "github.com/urfave/cli/v2"
 )
 
 var (
@@ -68,9 +68,7 @@ func main() {
 
 			r.Route("/", func(r chi.Router) {
 				r.Handle("/metrics", promhttp.Handler())
-				r.Mount("/healthcheck", func(w http.ResponseWriter, r *http.Request) {
-					w.WriteHeader(http.StatusOK)
-				})
+				r.Mount("/healthcheck", controller.HealthCheck{}.Routes())
 
 				// r.Mount("/barcode", controller.V1Barcodes{}.Routes())
 				// r.Mount("/product", controller.V1Products{}.Routes())

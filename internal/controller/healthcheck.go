@@ -1,6 +1,10 @@
 package controller
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/go-chi/chi"
+)
 
 type (
 	HealthCheck struct {
